@@ -6,12 +6,18 @@ import LatestOffers from '../components/LatestOffers/LatestOffers'
 import Process from "../components/Process/Process";
 
 
-const Home = ({Objets}) => {
+const Home = ({Objets, setSearchTerm,handleSearchTerm, setBorrowed}) => {
     return ( 
         <div className='Home'>
-            <Header/>
+            <Header 
+            setSearchTerm={setSearchTerm}
+            handleSearchTerm={handleSearchTerm}
+            />
             <Avantages/>
-            <LatestOffers Objets={Objets}/>
+            <LatestOffers 
+            Objets={Objets}
+            setBorrowed={setBorrowed}
+            />
             <Process/>
         </div>
      );

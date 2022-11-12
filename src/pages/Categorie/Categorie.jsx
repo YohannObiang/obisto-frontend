@@ -15,10 +15,12 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import {Link } from "react-router-dom";
 
 
 
-const Categorie = ({IdCategorie}) => {
+
+const Categorie = ({IdCategorie, setBorrowed}) => {
 
   const theme = createTheme({
     palette: {
@@ -51,6 +53,13 @@ const Categorie = ({IdCategorie}) => {
       return element.Categorie === IdCategorie });
       console.log(filteredstuffs)
 
+      const Borrow=(id_objet)=>{
+        const choosenOne=filteredstuffs.filter((element,index)=>{
+          return element.id_objet === id_objet});
+          setBorrowed(choosenOne[0])
+    
+    
+      };
  
     return ( 
 
@@ -79,15 +88,14 @@ const Categorie = ({IdCategorie}) => {
   // var cate = filteredstuffs
   
                 return(
-          <ThemeProvider theme={theme} key={item.id_objet}>
+                  <div key={item.id_objet} className='object'>
 
-        <Card sx={{ width: '92%', marginBottom: 5}}  key='' >
-        <CardMedia
-          component="img"
-          height="150"
-          image={image}
-          alt="Chaussure"
-        />
+          <ThemeProvider theme={theme}>
+
+        <Card sx={{ width: '95%', marginBottom: 1}}  key='' >
+        <div className="img"
+        style={{backgroundImage:`URL(./images/${item.image1})`}}
+        ></div>
         <CardContent>
 
         
@@ -108,11 +116,17 @@ const Categorie = ({IdCategorie}) => {
         <Divider/>
 
         <CardActions>
-          <Button size="medium" variant="contained" color='secondary'> <strong className='text'>Emprunter</strong></Button>
-          <Button size="small" ><span className='text'>VOIR</span></Button>
+        <Link to="/Validation">
+          <Button size="small" variant="contained" color='secondary' onClick={()=>Borrow(item.id_objet)} > <strong className='text'>Emprunter</strong></Button>
+        </Link>
+        <Link to="/Details">
+          <Button size="small" onClick={()=>Borrow(item.id_objet)}><span className='text'>VOIR</span></Button>
+
+        </Link>
         </CardActions>
           </Card>
           </ThemeProvider>
+          </div>
               )})}
 
         

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
+import Ps4 from '../assets/PS4.png'
 
-export default class SimpleSlider extends Component {
+export default class Caroussel extends Component {
   render() {
     const settings = {
       dots: true,
@@ -15,7 +16,7 @@ export default class SimpleSlider extends Component {
         <h2> Single Item</h2>
         <Slider {...settings}>
           <div>
-            <h3>1</h3>
+            <h3>{Ps4}</h3>
           </div>
           <div>
             <h3>2</h3>

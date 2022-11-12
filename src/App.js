@@ -27,16 +27,19 @@ import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturi
 import axios from 'axios';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import Home from './pages/Home';
+import SignIn from './pages/Sign In';
+import SignUp from './pages/Sign up';
+import AddressForm from './components/AddressForm';
 import Footer from './components/footer/Footer';
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import {Link } from "react-router-dom";
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-
+import Details from './pages/Details/Details';
 import FilterResult from './pages/FilterResult/FilterResult'
 import Categorie from './pages/Categorie/Categorie';
 import ConstructionIcon from '@mui/icons-material/Construction';
-
+import CheckoutForm from './components/CheckoutForm';
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -108,8 +111,25 @@ export default function PersistentDrawerLeft() {
     setObjets(response.data);
 
   };
+  const [filteredstuffs, setfilteredstuffs] = useState([]);
 
+  const handleSearchTerm = () => {
+    
+    if(SearchTerm.length > 0){
+    var filtered = Objets.filter(item => item.objet.toLowerCase().includes(SearchTerm.toLowerCase()));
+    console.log(filtered)
+    setfilteredstuffs(filtered)
+
+  }
+    else{
+      setfilteredstuffs(Objets)
+    }
+  };
+
+  const [Borrowed, setBorrowed] = useState('');
   const [IdCategorie, setIdCategorie] = useState('');
+  const [SearchTerm, setSearchTerm] = useState("");
+console.log(Borrowed)
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -133,12 +153,15 @@ export default function PersistentDrawerLeft() {
             <img  src={logo} alt="" />
             </Link>
           </div>
+          <Link to="/Ajouter-un-article/Connexion">
+
           <IconButton
             color="inherit"
             sx={{width:'fit-content'}}
           >
             <DiscountIcon sx={{color:'#262D44'}}/>
           </IconButton>
+          </Link>
         </Toolbar>
         
       </AppBar>
@@ -252,10 +275,31 @@ export default function PersistentDrawerLeft() {
       </Drawer>
       <Main open={open} >
         <DrawerHeader />
-      <Routes>  
-        <Route path="/" element={<Home Objets = {Objets}/>} /> 
-        <Route path="/recherche" element={<FilterResult/>} /> 
-        <Route path="/categorie" element={<Categorie IdCategorie = {IdCategorie}/>} /> 
+      <Routes>
+        <Route path="/" element={<Home 
+        Objets = {Objets} 
+        setSearchTerm={setSearchTerm}
+        handleSearchTerm={handleSearchTerm}
+        setBorrowed={setBorrowed}
+        />} /> 
+        <Route path="/recherche" element={<FilterResult
+        SearchTerm={SearchTerm}
+        filteredstuffs={filteredstuffs}
+        setfilteredstuffs={setfilteredstuffs}
+        setBorrowed={setBorrowed}
+        />} /> 
+        <Route path="/categorie" element={<Categorie 
+        IdCategorie = {IdCategorie}
+        setBorrowed={setBorrowed}
+        />} /> 
+        <Route path="/Ajouter-un-article/Connexion" element={<SignIn/>} /> 
+        <Route path="/Ajouter-un-article/Inscription" element={<SignUp/>} /> 
+        <Route path="/Details" element={<Details
+        Borrowed={Borrowed}
+        />} /> 
+        <Route path="/Validation" element={<CheckoutForm
+         Borrowed={Borrowed}
+        />} /> 
       </Routes>
         <Footer/>
       </Main>

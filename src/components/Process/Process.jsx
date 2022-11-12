@@ -7,7 +7,7 @@ const Process = () => {
         <div className="process">
             <h2>Comment ca marche?</h2>
             <div className="video">
-                <video height='100%' controls>
+                <video width='100%'  controls>
                     <source src={video} type="video/mp4"></source>
                 </video>
             </div>
